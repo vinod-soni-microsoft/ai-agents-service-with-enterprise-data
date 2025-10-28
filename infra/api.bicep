@@ -18,6 +18,7 @@ param enableAzureMonitorTracing bool
 param azureTracingGenAIContentRecordingEnabled bool
 param projectEndpoint string
 param frontendUrl string = ''
+param storageAccountName string = ''
 
 resource apiIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31' = {
   name: identityName
@@ -84,6 +85,14 @@ var env = [
   {
     name: 'FRONTEND_URL'
     value: frontendUrl
+  }
+  {
+    name: 'AZURE_STORAGE_ACCOUNT_NAME'
+    value: storageAccountName
+  }
+  {
+    name: 'AZURE_STORAGE_CONTAINER_NAME'
+    value: 'documents'
   }
 ]
 

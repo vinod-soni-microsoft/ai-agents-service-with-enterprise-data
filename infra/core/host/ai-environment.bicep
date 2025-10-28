@@ -30,6 +30,9 @@ module storageAccount '../storage/storage-account.bicep' = {
       {
         name: 'default'
       }
+      {
+        name: 'documents'
+      }
     ]
     files: [
       {
@@ -129,6 +132,15 @@ module searchService '../search/search-services.bicep' =
     }
   }
 
+// Grant Search Service access to Storage Account for indexing
+module searchStorageRoleAssignment  '../../core/security/role.bicep' = if (!empty(searchServiceName)) {
+  name: 'search-role-storage-blob-reader'
+  params: {
+    principalType: 'ServicePrincipal'
+    principalId: searchService.outputs.principalId
+    roleDefinitionId: '2a2b9908-6ea1-4ae2-8e65-a410df84e7d1' // Storage Blob Data Reader
+  }
+}
 
 // Outputs
 output storageAccountId string = storageAccount.outputs.id
