@@ -316,6 +316,7 @@ module api 'api.bicep' = {
     azureTracingGenAIContentRecordingEnabled: azureTracingGenAIContentRecordingEnabled
     projectEndpoint: projectEndpoint
     frontendUrl: '*'  // Wildcard CORS for now to avoid circular dependency
+    storageAccountName: empty(azureExistingAIProjectResourceId) ? ai!.outputs.storageAccountName : ''
   }
 }
 
@@ -471,6 +472,16 @@ module backendRoleAzureAIDeveloperRG 'core/security/role.bicep' = {
   }
 }
 
+module backendRoleStorageBlobDataContributorRG 'core/security/role.bicep' = if (empty(azureExistingAIProjectResourceId)) {
+  name: 'backend-role-storage-blob-data-contributor-rg'
+  scope: rg
+  params: {
+    principalType: 'ServicePrincipal'
+    principalId: api.outputs.SERVICE_API_IDENTITY_PRINCIPAL_ID
+    roleDefinitionId: 'ba92f5b4-2d11-453d-a403-e96b0029c9fe' // Storage Blob Data Contributor
+  }
+}
+
 output AZURE_RESOURCE_GROUP string = rg.name
 
 // Outputs required for local development server
@@ -487,6 +498,7 @@ output AZURE_EXISTING_AGENT_ID string = agentID
 output AZURE_EXISTING_AIPROJECT_ENDPOINT string = projectEndpoint
 output ENABLE_AZURE_MONITOR_TRACING bool = enableAzureMonitorTracing
 output AZURE_TRACING_GEN_AI_CONTENT_RECORDING_ENABLED bool = azureTracingGenAIContentRecordingEnabled
+output AZURE_STORAGE_ACCOUNT_NAME string = empty(azureExistingAIProjectResourceId) ? ai!.outputs.storageAccountName : ''
 
 // Outputs required by azd for ACA
 output AZURE_CONTAINER_ENVIRONMENT_NAME string = containerApps.outputs.environmentName
