@@ -29,6 +29,9 @@ The app code runs in Azure Container App to process the user input and generate 
 - **Knowledge Retrieval**<br/>
 The AI agent uses file search to retrieve knowledge from uploaded files.
 
+- **Storage Account Integration with AI Search**<br/>
+Documents uploaded to Azure Blob Storage can be automatically indexed by AI Search, enabling scalable enterprise data integration without manual embedding generation. See [Storage Search Integration](docs/storage_search_integration.md) for details.
+
 - **Customizable AI Model Deployment**<br/>
 The solution allows users to configure and deploy AI models, such as gpt-4o-mini, with options to adjust model capacity, and knowledge retrieval methods.
 
@@ -136,8 +139,8 @@ This template creates everything you need to get started with Azure AI Foundry:
 | [Azure OpenAI Service](https://learn.microsoft.com/azure/ai-services/openai/) | Powers the AI agents for conversational AI and intelligent search capabilities. Default models deployed are gpt-4o-mini, but any Azure AI models can be specified per the [documentation](docs/deploy_customization.md#customizing-model-deployments) |
 | [Azure Container Apps](https://learn.microsoft.com/azure/container-apps/) | Hosts and scales the web application with serverless containers |
 | [Azure Container Registry](https://learn.microsoft.com/azure/container-registry/) | Stores and manages container images for secure deployment |
-| [Storage Account](https://learn.microsoft.com/azure/storage/blobs/) | Provides blob storage for application data and file uploads |
-| [AI Search Service](https://learn.microsoft.com/azure/search/) | *Optional* - Enables hybrid search capabilities combining semantic and vector search |
+| [Storage Account](https://learn.microsoft.com/azure/storage/blobs/) | Provides blob storage for application data, file uploads, and document indexing. Integrated with AI Search for automatic content indexing. See [Storage Search Integration](docs/storage_search_integration.md) |
+| [AI Search Service](https://learn.microsoft.com/azure/search/) | *Optional* - Enables hybrid search capabilities combining semantic and vector search. Can automatically index documents from Storage Account. See [Storage Search Integration](docs/storage_search_integration.md) |
 | [Application Insights](https://learn.microsoft.com/azure/azure-monitor/app/app-insights-overview) | *Optional* - Provides application performance monitoring, logging, and telemetry for debugging and optimization |
 | [Log Analytics Workspace](https://learn.microsoft.com/azure/azure-monitor/logs/log-analytics-workspace-overview) | *Optional* - Collects and analyzes telemetry data for monitoring and troubleshooting |
 
